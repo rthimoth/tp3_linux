@@ -1,0 +1,1 @@
+{"ram": {"total": 16527380480, "available": 12619800576, "percent": 23.6, "used": 2879610880, "free": 9173209088}, "disk": {"total": 401153667072, "used": 100766511104, "free": 279934631936, "percent": 26.5}, "cpu": {"cpu_percent": 4.0}, "tcp_ports": {"80": true, "443": false}}
