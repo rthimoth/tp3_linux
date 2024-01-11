@@ -17,7 +17,7 @@ def save_report(data):
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     report_path = f"{report_directory}/report_{timestamp}.json"
     with open(report_path, 'w') as file:
-        json.dump(data, file)
+        json.dump(data, file, indent=4)  # Ajout de l'argument indent pour une mise en forme lisible
     return report_path
 
 def parse_arguments():
