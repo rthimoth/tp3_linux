@@ -3,6 +3,7 @@ import json
 import os
 import datetime
 import logging
+import glob
 from monitoring import check_system
 
 def setup_logging():
@@ -36,25 +37,38 @@ def main():
         logging.info(f"Check effectué, rapport enregistré sous : {report_path}")
 
     elif args.command == 'list':
-    report_directory = 'var/monit'  # Chemin relatif pour le répertoire de rapport
+        report_directory = 'var/monit'  # Chemin relatif pour le répertoire de rapport
     # Vérifiez que le répertoire existe
-    if not os.path.exists(report_directory):
-        print("Aucun rapport n'a été trouvé.")
-        return
+        if not os.path.exists(report_directory):
+            print("Aucun rapport n'a été trouvé.")
+            return
     
     # Utilisez glob pour lister tous les fichiers JSON dans le répertoire
-    reports = glob.glob(f"{report_directory}/*.json")
-    
-    if reports:
-        print("Rapports disponibles :")
-        for report in reports:
-            print(os.path.basename(report))  # Affiche uniquement le nom de fichier, pas le chemin complet
-    else:
-        print("Aucun rapport n'a été trouvé.")
+        reports = glob.glob(f"{report_directory}/*.json")
+        
+        if reports:
+            print("Rapports disponibles :")
+            for report in reports:
+                print(os.path.basename(report))  # Affiche uniquement le nom de fichier, pas le chemin complet
+        else:
+            print("Aucun rapport n'a été trouvé.")
 
     elif args.command == 'get':
-        # Récupérer un rapport spécifique
-        pass
+        if args.arguments and args.arguments[0] == 'last':
+            report_directory = 'var/monit'
+            try:
+                # Liste tous les fichiers de rapport et trouve le plus récent
+                report_files = [os.path.join(report_directory, f) for f in os.listdir(report_directory) if os.path.isfile(os.path.join(report_directory, f))]
+                latest_report = max(report_files, key=os.path.getmtime)
+                
+                # Ouvre et affiche le contenu du dernier rapport
+                with open(latest_report, 'r') as file:
+                    report_data = json.load(file)
+                    print(json.dumps(report_data, indent=4))
+            except ValueError:
+                print("Aucun rapport n'a été trouvé.")
+            except Exception as e:
+                print(f"Erreur lors de la lecture du rapport : {e}")
 
 if __name__ == "__main__":
     main()
