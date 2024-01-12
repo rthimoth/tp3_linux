@@ -11,14 +11,14 @@ def setup_logging():
     logging.basicConfig(filename=log_file_path, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def save_report(data):
-    # Enregistrez le rapport dans var/monit/ avec un timestamp unique
-    report_directory = 'var/monit'  # Utilisez le chemin relatif pour le répertoire de rapport
+    report_directory = 'var/monit'  # Chemin relatif pour le répertoire de rapport
     os.makedirs(report_directory, exist_ok=True)  # Crée le répertoire s'il n'existe pas
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     report_path = f"{report_directory}/report_{timestamp}.json"
     with open(report_path, 'w') as file:
-        json.dump(data, file, indent=4)  # Ajout de l'argument indent pour une mise en forme lisible
+        json.dump(data, file, separators=(',', ':'))  # Supprime les espaces inutiles
     return report_path
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="monit.py - Outil de monitoring système")
