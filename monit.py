@@ -19,7 +19,6 @@ def save_report(data):
         json.dump(data, file, separators=(',', ':'))  # Supprime les espaces inutiles
     return report_path
 
-
 def parse_arguments():
     parser = argparse.ArgumentParser(description="monit.py - Outil de monitoring système")
     parser.add_argument('command', choices=['check', 'list', 'get'], help='Commande à exécuter')
@@ -37,8 +36,21 @@ def main():
         logging.info(f"Check effectué, rapport enregistré sous : {report_path}")
 
     elif args.command == 'list':
-        # Lister les rapports disponibles dans var/monit/
-        pass
+    report_directory = 'var/monit'  # Chemin relatif pour le répertoire de rapport
+    # Vérifiez que le répertoire existe
+    if not os.path.exists(report_directory):
+        print("Aucun rapport n'a été trouvé.")
+        return
+    
+    # Utilisez glob pour lister tous les fichiers JSON dans le répertoire
+    reports = glob.glob(f"{report_directory}/*.json")
+    
+    if reports:
+        print("Rapports disponibles :")
+        for report in reports:
+            print(os.path.basename(report))  # Affiche uniquement le nom de fichier, pas le chemin complet
+    else:
+        print("Aucun rapport n'a été trouvé.")
 
     elif args.command == 'get':
         # Récupérer un rapport spécifique
