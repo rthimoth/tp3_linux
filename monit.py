@@ -69,6 +69,42 @@ def main():
                 print("Aucun rapport n'a été trouvé.")
             except Exception as e:
                 print(f"Erreur lors de la lecture du rapport : {e}")
+    
+    elif args.command == 'get':
+        if args.arguments and args.arguments[0] == 'avg':
+            try:
+                hours = int(args.arguments[1])  # Convertit le deuxième argument en nombre d'heures
+                cutoff_time = datetime.now() - timedelta(hours=hours)
+                print(f"Cutoff time: {cutoff_time}")
+
+                report_directory = 'var/monit'
+                report_files = glob.glob(f"{report_directory}/*.json")
+                print(f"Tous les rapports: {report_files}")
+
+                # Filtrez les rapports des X dernières heures
+                recent_reports = [file for file in report_files if datetime.fromtimestamp(os.path.getmtime(file)) > cutoff_time]
+                print(f"Rapports récents: {recent_reports}") 
+                # Initialisation des variables pour le calcul des moyennes
+                total_ram, total_cpu, count = 0, 0, 0
+
+                for report_file in recent_reports:
+                    with open(report_file, 'r') as file:
+                        data = json.load(file)
+                        total_ram += data['ram']['percent']
+                        total_cpu += data['cpu']['cpu_percent']
+                        count += 1
+
+                if count > 0:
+                    avg_ram = total_ram / count
+                    avg_cpu = total_cpu / count
+                    print(f"Moyenne sur les {hours} dernières heures:\nRAM: {avg_ram}%\nCPU: {avg_cpu}%")
+                else:
+                    print("Aucun rapport trouvé dans la période spécifiée.")
+
+            except IndexError:
+                print("Veuillez spécifier le nombre d'heures.")
+            except ValueError:
+                print("Veuillez fournir un nombre valide d'heures.")
 
 if __name__ == "__main__":
     main()
