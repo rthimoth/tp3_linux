@@ -1,7 +1,7 @@
 import argparse
 import json
 import os
-import datetime
+from datetime import timedelta, datetime 
 import logging
 import glob
 from monitoring import check_system
@@ -70,8 +70,7 @@ def main():
             except Exception as e:
                 print(f"Erreur lors de la lecture du rapport : {e}")
     
-    elif args.command == 'get':
-        if args.arguments and args.arguments[0] == 'avg':
+        if args.arguments and args.arguments[0] == 'avg':       
             try:
                 hours = int(args.arguments[1])  # Convertit le deuxième argument en nombre d'heures
                 cutoff_time = datetime.now() - timedelta(hours=hours)
