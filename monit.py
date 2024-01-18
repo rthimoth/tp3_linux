@@ -1,8 +1,9 @@
 import argparse
 import json
 import os
-from datetime import timedelta, datetime 
+import datetime
 import logging
+from datetime import datetime, timedelta
 import glob
 from monitoring import check_system
 
@@ -14,7 +15,7 @@ def setup_logging():
 def save_report(data):
     report_directory = 'var/monit'  # Chemin relatif pour le répertoire de rapport
     os.makedirs(report_directory, exist_ok=True)  # Crée le répertoire s'il n'existe pas
-    timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
     report_path = f"{report_directory}/report_{timestamp}.json"
     with open(report_path, 'w') as file:
         json.dump(data, file, separators=(',', ':'))  # Supprime les espaces inutiles
@@ -70,7 +71,7 @@ def main():
             except Exception as e:
                 print(f"Erreur lors de la lecture du rapport : {e}")
     
-        if args.arguments and args.arguments[0] == 'avg':       
+        if args.arguments and args.arguments[0] == 'avg':
             try:
                 hours = int(args.arguments[1])  # Convertit le deuxième argument en nombre d'heures
                 cutoff_time = datetime.now() - timedelta(hours=hours)
