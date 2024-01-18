@@ -8,9 +8,12 @@ import glob
 from monitoring import check_system
 
 def setup_logging():
-    log_file_path = 'var/monit.log'  # Utilisez le chemin relatif pour le fichier log
+    log_file_path = 'var/monit.log'  # Chemin relatif pour le fichier log
     os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
-    logging.basicConfig(filename=log_file_path, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(filename=log_file_path, level=logging.INFO,
+                        format='%(asctime)s - %(levelname)s - %(message)s',
+                        encoding='utf-8')  # Ajout de l'encodage UTF-8
+
 
 def save_report(data):
     report_directory = 'var/monit'  # Chemin relatif pour le répertoire de rapport
