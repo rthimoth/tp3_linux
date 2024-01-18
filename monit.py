@@ -8,11 +8,11 @@ import glob
 from monitoring import check_system
 
 def setup_logging():
-    log_file_path = 'var/monit.log'  # Chemin relatif pour le fichier log
+    log_file_path = 'var/monit.log'
     os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
     logging.basicConfig(filename=log_file_path, level=logging.INFO,
                         format='%(asctime)s - %(levelname)s - %(message)s',
-                        encoding='utf-8')  # Ajout de l'encodage UTF-8
+                        encoding='utf-8')
 
 
 def save_report(data):
@@ -35,7 +35,7 @@ def main():
     setup_logging()
 
     if args.command == 'check':
-        tcp_ports = [80, 443]  # À remplacer par la configuration réelle
+        tcp_ports = [80, 443]
         report_data = check_system(tcp_ports)
         report_path = save_report(report_data)
         logging.info(f"Check effectué, rapport enregistré sous : {report_path}")
