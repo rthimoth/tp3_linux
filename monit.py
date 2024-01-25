@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import argparse
 import json
 import os
@@ -13,7 +15,6 @@ def setup_logging():
     logging.basicConfig(filename=log_file_path, level=logging.INFO,
                         format='%(asctime)s - %(levelname)s - %(message)s',
                         encoding='utf-8')
-
 
 def save_report(data):
     report_directory = 'var/monit'  # Chemin relatif pour le répertoire de rapport
