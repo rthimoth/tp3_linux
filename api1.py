@@ -27,6 +27,23 @@ def lister_rapports_et_contenu():
     except OSError as e:
         abort(500, description=str(e))
 
+@app.route('/rapports/<nom_rapport>', methods=['GET'])
+def afficher_rapport(nom_rapport):
+    chemin_complet = os.path.join(REPERTOIRE_RAPPORTS, nom_rapport)
+    try:
+        if os.path.isfile(chemin_complet):
+            with open(chemin_complet, 'r', encoding='utf-8') as contenu_fichier:
+                try:
+                    contenu = json.load(contenu_fichier)
+                    return jsonify(contenu)
+                except json.JSONDecodeError:
+                    abort(400, description="Le fichier n'est pas un JSON valide.")
+        else:
+            abort(404, description="Fichier non trouvé")
+    except OSError as e:
+        abort(500, description=str(e))
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)
+
 

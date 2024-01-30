@@ -10,14 +10,14 @@ import glob
 from monitoring import check_system
 
 def setup_logging():
-    log_file_path = 'var/log/monit.log'
+    log_file_path = 'home/ranvin/tp3_linux/var/log/monit.log'
     os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
     logging.basicConfig(filename=log_file_path, level=logging.INFO,
                         format='%(asctime)s - %(levelname)s - %(message)s',
                         encoding='utf-8')
 
 def save_report(data):
-    report_directory = 'var/monit'  # Chemin relatif pour le répertoire de rapport
+    report_directory = 'home/ranvin/tp3_linux/var/monit' 
     os.makedirs(report_directory, exist_ok=True)  # Crée le répertoire s'il n'existe pas
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
     report_path = f"{report_directory}/report_{timestamp}.json"
@@ -42,7 +42,7 @@ def main():
         logging.info(f"Check effectué, rapport enregistré sous : {report_path}")
 
     elif args.command == 'list':
-        report_directory = 'var/monit'  # Chemin relatif pour le répertoire de rapport
+        report_directory = 'var/monit'
     # Vérifiez que le répertoire existe
         if not os.path.exists(report_directory):
             print("Aucun rapport n'a été trouvé.")
