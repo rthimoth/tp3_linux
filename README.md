@@ -98,3 +98,12 @@ permet de t'aider si tu n'arrives pas a utiliser le programme
 ```
 python3 monit.py -h
 ```
+
+lancer l'api avec 
+
+```
+python3 api1.py
+```
+
+acceder en localhost à l'api avec la liste de tout les rapports
+
