@@ -27,7 +27,7 @@ def save_report(data):
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="monit.py - Outil de monitoring système")
-    parser.add_argument('command', choices=['check', 'list', 'get'], help='Commande à exécuter')
+    parser.add_argument('command', choices=['check', 'list', 'get, get avg, get last'], help='Commande à exécuter')
     parser.add_argument('arguments', nargs='*', help='Arguments supplémentaires pour la commande')
     return parser.parse_args()
 
