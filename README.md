@@ -80,9 +80,6 @@ sudo systemctl enable monit.service
 sudo systemctl start monit.service
 ```
 
-toutes les commandes possible dans le programme monit.py
-
-permet de recupèrer toutes les données du monitoring
 
 # Comment utiliser le programmme
 
