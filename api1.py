@@ -6,9 +6,13 @@ app = Flask(__name__)
 app.secret_key = b'SECRET_KEY'
 REPERTOIRE_RAPPORTS = 'var/monit'
 
-@app.route('/')
-def rediriger_vers_rapports():
-    return redirect('/rapports')
+@app.errorhandler(404)
+def error404(e):
+    return jsonify({'error': "404"}), 404
+
+# @app.route('/')
+# def rediriger_vers_rapports():
+#     return redirect('/rapports')
 
 @app.route('/rapports', methods=['GET'])
 def lister_rapports_et_contenu():

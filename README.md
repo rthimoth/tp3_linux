@@ -1,3 +1,5 @@
+# Configuration obligatoire
+
 Avoir python 3.11 ainsi que pip pour installer des packets 
 
 ```
@@ -6,7 +8,17 @@ git clone https://github.com/rthimoth/tp3_linux.git
 
 ```
 pip3 install psutil
+
+pip3 install flask
 ```
+
+ou
+
+```
+pip install -r requirements.txt
+```
+
+# Service
 
 Création du service Check
 
@@ -71,6 +83,8 @@ sudo systemctl start monit.service
 toutes les commandes possible dans le programme monit.py
 
 permet de recupèrer toutes les données du monitoring
+
+# Comment utiliser le programmme
 
 ```
 python3 monit.py check 
